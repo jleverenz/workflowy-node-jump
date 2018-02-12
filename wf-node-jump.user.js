@@ -24,12 +24,11 @@
  */
 function loadJQueryUI() {
     return new Promise((resolve, reject)=>{
-        var script = document.createElement("script");
-        script.setAttribute("src", "//code.jquery.com/ui/1.8.7/jquery-ui.min.js");
-        script.addEventListener('load', function() {
-            resolve();
-        }, false);
-        document.body.appendChild(script);
+        $.getScript('https://code.jquery.com/ui/1.8.7/jquery-ui.min.js')
+            .done( function() {
+                console.log('here');
+                resolve();
+            });
     });
 }
 
