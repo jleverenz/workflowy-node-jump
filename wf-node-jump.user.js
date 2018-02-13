@@ -25,10 +25,7 @@
 function loadJQueryUI() {
     return new Promise((resolve, reject)=>{
         $.getScript('https://code.jquery.com/ui/1.8.7/jquery-ui.min.js')
-            .done( function() {
-                console.log('here');
-                resolve();
-            });
+            .done(resolve);
     });
 }
 
