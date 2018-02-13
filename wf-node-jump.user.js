@@ -110,12 +110,20 @@ GM_addStyle (`
 
 
 /**
- * alt+g key handler. Toggle visibility of pop-up. When becoming visible, clear
+ * Logic for detecting if a keydown event is the node jump hotkey.
+ */
+function detectHotKeyPress(e) {
+    // alt+g
+    return (e.keyCode == 71 && !e.shiftKey && e.ctrlKey && !e.altKey && !e.metaKey);
+}
+
+
+/**
+ * hot key handler. Toggle visibility of pop-up. When becoming visible, clear
  * input and set focus to it.
  */
 document.addEventListener('keydown', function(e) {
-    // pressed alt+g
-    if (e.keyCode == 71 && !e.shiftKey && e.ctrlKey && !e.altKey && !e.metaKey) {
+    if (detectHotKeyPress(e)) {
         $("#gmPopupContainer").toggle();
         if($("#gmPopupContainer").is(":visible")) {
             // Refresh node data window pop-up is opened. This will ensure the
