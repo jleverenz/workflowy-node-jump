@@ -118,6 +118,11 @@ document.addEventListener('keydown', function(e) {
     if (e.keyCode == 71 && !e.shiftKey && e.ctrlKey && !e.altKey && !e.metaKey) {
         $("#gmPopupContainer").toggle();
         if($("#gmPopupContainer").is(":visible")) {
+            // Refresh node data window pop-up is opened. This will ensure the
+            // latest node data is available.
+            getWorkflowyData().then( v => {
+                $("#workflowynode").autocomplete('option', 'source', v); } )
+
             $("#workflowynode").val("");
             $("#workflowynode").focus();
         }
@@ -139,9 +144,10 @@ $( "#workflowynode" ).bind('keydown', function(e) {
 /**
  * Load resources and workflowy data, then initiatlize autcomplete widget.
  */
-Promise.all([loadJQueryUI(), getWorkflowyData()]).then(function(values) {
+loadJQueryUI().then(function() {
+    // Initialize the autocomplete widget. Note sources is set dynamically when
+    // the pop-up is opened, to get latest node data.
     $("#workflowynode").autocomplete({
-        source: values[1],
         select: function(event, ui) {
             event.preventDefault();
 
