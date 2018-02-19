@@ -35,12 +35,10 @@ function getWorkflowyData() {
     return new Promise((resolve, reject)=>{
         $.get( "get_initialization_data?client_version=18", function( data ) {
             var maxDepth = 3;   // maximum node depth to traverse
-            var count = 0;
             var depthNames = [];
 
             function traverse(node, depth) {
                 if(depth == maxDepth) return;
-                count = count + 1;
                 if(!depthNames[depth]) {
                     depthNames[depth] = []
                 }
