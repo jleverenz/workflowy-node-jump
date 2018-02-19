@@ -1,3 +1,5 @@
+const nf = require('./nodefinder')
+
 // 1. load resources (jquery-ui)
 // 2. load data from workflowy
 // 3. (on complete) add & configure autocomplete widget
@@ -34,37 +36,8 @@ function loadJQueryUI() {
 function getWorkflowyData() {
     return new Promise((resolve, reject)=>{
         $.get( "get_initialization_data?client_version=18", function( data ) {
-            var maxDepth = 3;   // maximum node depth to traverse
-            var depthNames = [];
-
-            function traverse(node, depth) {
-                if(depth == maxDepth) return;
-                if(!depthNames[depth]) {
-                    depthNames[depth] = []
-                }
-
-                var cleanLabel = node['nm'].replace(/<\/?[ibu]>/g, "");
-
-                depthNames[depth].push({ label: cleanLabel, id: node['id'] });
-                if(node['ch']) {
-                    for(var i = 0; i < node['ch'].length; i++) {
-                        traverse(node['ch'][i], depth+1);
-                    }
-                }
-            }
-
             var rootChildren = data['projectTreeData']['mainProjectTreeInfo']['rootProjectChildren'];
-            for(var i = 0; i < rootChildren.length; i++) {
-                traverse(rootChildren[i], 0);
-            }
-
-            var names = []
-            for(var i = 0; i < maxDepth; i++) {
-                for(var j = 0; j < depthNames[i].length; j++) {
-                    names.push(depthNames[i][j]);
-                }
-            }
-            resolve(names);
+            resolve(nf.processWorkflowyNodes(rootChildren));
         });
     });
 }
