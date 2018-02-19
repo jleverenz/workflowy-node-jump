@@ -147,6 +147,14 @@ $( "#workflowynode" ).bind('keydown', function(e) {
 
 
 /**
+ * Hide on losing focus.
+ */
+$( "#workflowynode" ).focusout(function(e) {
+    $("#gmPopupContainer").hide();
+});
+
+
+/**
  * Load resources and workflowy data, then initiatlize autcomplete widget.
  */
 loadJQueryUI().then(function() {
