@@ -1,0 +1,9 @@
+// ==UserScript==
+// @name Workflowy Node Jump
+// @description Pop-up widget w/ autocomplete to quickly open a node.
+// @author Jeff Leverenz
+// @version 0.1
+// @license MIT
+// @namespace https://github.com/jleverenz
+// @match https://workflowy.com/*
+// ==/UserScript==

@@ -1,14 +1,3 @@
-// ==UserScript==
-// @name Workflowy Node Jump
-// @description Pop-up widget w/ autocomplete to quickly open a node.
-// @author Jeff Leverenz
-// @version 0.0
-// @license MIT
-// @namespace https://github.com/jleverenz
-// @match https://workflowy.com/*
-// @grant GM_addStyle
-// ==/UserScript==
-
 // 1. load resources (jquery-ui)
 // 2. load data from workflowy
 // 3. (on complete) add & configure autocomplete widget
@@ -93,7 +82,17 @@ $("body").append(`
 `);
 
 
-GM_addStyle (`
+function addGlobalStyle(css) {
+    var head, style;
+    head = document.getElementsByTagName('head')[0];
+    if (!head) { return; }
+    style = document.createElement('style');
+    style.type = 'text/css';
+    style.innerHTML = css;
+    head.appendChild(style);
+}
+
+addGlobalStyle(`
     #gmPopupContainer {
         position:               fixed;
         top:                    30%;
