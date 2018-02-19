@@ -8,12 +8,12 @@ exports.processWorkflowyNodes = function(nodes) {
             depthNames[depth] = []
         }
 
-        var cleanLabel = node['nm'].replace(/<\/?[ibu]>/g, "");
+        var cleanLabel = node.nm.replace(/<\/?[ibu]>/g, "");
 
-        depthNames[depth].push({ label: cleanLabel, id: node['id'] });
-        if(node['ch']) {
-            for(var i = 0; i < node['ch'].length; i++) {
-                traverse(node['ch'][i], depth+1);
+        depthNames[depth].push({ label: cleanLabel, id: node.id });
+        if(node.ch) {
+            for(var i = 0; i < node.ch.length; i++) {
+                traverse(node.ch[i], depth+1);
             }
         }
     }

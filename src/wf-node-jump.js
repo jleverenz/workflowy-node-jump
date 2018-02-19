@@ -36,7 +36,7 @@ function loadJQueryUI() {
 function getWorkflowyData() {
     return new Promise((resolve, reject)=>{
         $.get( "get_initialization_data?client_version=18", function( data ) {
-            var rootChildren = data['projectTreeData']['mainProjectTreeInfo']['rootProjectChildren'];
+            var rootChildren = data.projectTreeData.mainProjectTreeInfo.rootProjectChildren;
             resolve(nf.processWorkflowyNodes(rootChildren));
         });
     });
