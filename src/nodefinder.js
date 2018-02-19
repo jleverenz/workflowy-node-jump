@@ -23,7 +23,7 @@ exports.processWorkflowyNodes = function(nodes) {
     }
 
     var names = []
-    for(var i = 0; i < maxDepth; i++) {
+    for(var i = 0; i < depthNames.length; i++) {
         for(var j = 0; j < depthNames[i].length; j++) {
             names.push(depthNames[i][j]);
         }
