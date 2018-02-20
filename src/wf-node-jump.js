@@ -99,7 +99,8 @@ document.addEventListener('keydown', function(e) {
             // Refresh node data window pop-up is opened. This will ensure the
             // latest node data is available.
             getWorkflowyData().then( v => {
-                $("#workflowynode").autocomplete('option', 'source', v); } )
+                nf.indexNodes(v);
+            });
 
             $("#workflowynode").val("");
             $("#workflowynode").focus();
@@ -134,6 +135,12 @@ loadJQueryUI().then(function() {
     // Initialize the autocomplete widget. Note sources is set dynamically when
     // the pop-up is opened, to get latest node data.
     $("#workflowynode").autocomplete({
+        source: function(request, response) {
+            var results = nf.search(request.term);
+            response(results.map( function(a) {
+                return { label: a.label, id: a.wfid };
+            }));
+        },
         select: function(event, ui) {
             event.preventDefault();
 

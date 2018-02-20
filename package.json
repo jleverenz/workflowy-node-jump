@@ -4,6 +4,7 @@
   "description": "**workflowy-user-scripts** is a collection of user scripts authored with [Violentmonkey][1] and recent versions of Chrome on macos and Windows. YMMV with other setups.",
   "main": "src/index.js",
   "dependencies": {
+    "lunr": "^2.1.5",
     "uglifyjs-webpack-plugin": "^1.2.0",
     "webpack": "^3.11.0"
   },
