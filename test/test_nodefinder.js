@@ -17,6 +17,17 @@ describe('nodefinder', function() {
             var result = nf.search('salad');
             assert.deepEqual([1,3,4,0], result.map(a => a.id));
         });
+
+        it('lunr tokenizes on slashes', function() {
+            var node_docs = [
+                { id: 0, label: "Blue Green", depth: 2 },
+                { id: 1, label: "Blue/Green", depth: 1 }
+            ];
+
+            nf.indexNodes(node_docs);
+            var result = nf.search('Blue');
+            assert.equal(result.length, 2);
+        });
     });
 
     describe('processWorkflowyNodes', function() {

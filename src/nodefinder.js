@@ -23,6 +23,8 @@ exports.indexNodes = function(nodes) {
     stored_nodes = nodes;
     lunr_index = lunr(function() {
         this.field('label');
+        this.tokenizer.separator = /[\s\-\\\/]+/
+
 
         for(var i = 0; i < nodes.length; i++) {
             this.add(nodes[i]);
