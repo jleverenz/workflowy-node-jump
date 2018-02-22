@@ -63,6 +63,8 @@ exports.search = function(phrase) {
     var rv = []
     for(var i = 0; i < score_buckets.length; i++) {
         for(var j = 0; j < score_buckets[i].length; j++) {
+            var r = stored_nodes[score_buckets[i][j].ref];
+            r.score = score_buckets[i][j].score;
             rv.push(stored_nodes[score_buckets[i][j].ref]);
         }
     }
