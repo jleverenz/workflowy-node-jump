@@ -42,7 +42,7 @@ function getWorkflowyData() {
 $("body").append(`
     <div id="gmPopupContainer">
         <div class="ui-widget">
-            <label for="workflowynode">Node: </label>
+            <label for="workflowynode">Jump: </label>
             <input id="workflowynode">
         </div>
     </div>
