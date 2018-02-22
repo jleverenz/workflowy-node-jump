@@ -1,9 +1,5 @@
 const nf = require('./nodefinder')
 
-// 1. load resources (jquery-ui)
-// 2. load data from workflowy
-// 3. (on complete) add & configure autocomplete widget
-
 
 /**
  * Load jquery-ui for user scripts.
