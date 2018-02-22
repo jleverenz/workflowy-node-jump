@@ -18,6 +18,17 @@ describe('nodefinder', function() {
             assert.deepEqual([1,3,4,0], result.map(a => a.id));
         });
 
+        it('orders nodes with equal lunr score by depth', function() {
+            var node_docs = [
+                { id: 0, label: "Purple", depth: 2 },
+                { id: 1, label: "Purple", depth: 1 }
+            ];
+
+            nf.indexNodes(node_docs);
+            var result = nf.search('Purple');
+            assert.deepEqual([1,2], result.map(a => a.depth));
+        });
+
         it('lunr tokenizes on slashes', function() {
             var node_docs = [
                 { id: 0, label: "Blue Green", depth: 2 },
