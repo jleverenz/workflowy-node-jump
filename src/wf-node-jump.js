@@ -1,5 +1,4 @@
-const nf = require('./nodefinder')
-
+import nf from './nodefinder'
 
 /**
  * Load jquery-ui for user scripts.
@@ -141,8 +140,9 @@ loadJQueryUI().then(function() {
             event.preventDefault();
 
             // Parse the node id to get the anchor url used by workflowy.
-            var pattern = RegExp("-([^-]+)$")
-            if(m = ui.item.id.match(pattern)) {
+            var pattern = RegExp("-([^-]+)$");
+            var m = ui.item.id.match(pattern);
+            if(m) {
                 var g = "https://workflowy.com/#/" + m[1];
                 $("#gmPopupContainer").hide();
                 window.location.href = g;

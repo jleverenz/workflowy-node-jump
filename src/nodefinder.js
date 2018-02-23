@@ -1,5 +1,4 @@
-const lunr = require('lunr');
-
+import lunr from 'lunr';
 
 function stableSort(arr, compare) {
     var original = arr.slice(0);
