@@ -1,6 +1,8 @@
 A [WorkFlowy][wf] user script implementing a "jump to node" pop-up menu with autocompletion.
 
-&#x2318;-J / CTRL-J to activate.
+To activate:
+* CTRL-J on Mac
+* CTRL-. on Windows
 
 This should be considered _alpha_ state software. Developed for Chrome with [Violentmonkey][vm] on macos & Windows.
 
