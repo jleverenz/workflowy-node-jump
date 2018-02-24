@@ -4,6 +4,6 @@
 // @author Jeff Leverenz
 // @version 0.1
 // @license MIT
-// @namespace https://github.com/jleverenz
+// @namespace https://github.com/jleverenz/workflowy-node-jump
 // @match https://workflowy.com/*
 // ==/UserScript==
