@@ -78,10 +78,9 @@ addGlobalStyle(`
  * Logic for detecting if a keydown event is the node jump hotkey.
  */
 function detectHotKeyPress(e) {
-
-    // CTRL+G on macos
     var platform = window.navigator.platform;
 
+    // CTRL+J on macos, CTRL-. on win
     if(platform.indexOf("Mac") == 0) {
         return (e.keyCode == 74 && !e.shiftKey && e.ctrlKey && !e.altKey && !e.metaKey);
     } else {
