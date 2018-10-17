@@ -1,6 +1,6 @@
 {
   "name": "workflowy-user-scripts",
-  "version": "0.0.0",
+  "version": "0.1.1",
   "description": "**workflowy-user-scripts** is a collection of user scripts authored with [Violentmonkey][1] and recent versions of Chrome on macos and Windows. YMMV with other setups.",
   "main": "src/index.js",
   "dependencies": {
