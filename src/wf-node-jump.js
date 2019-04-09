@@ -151,8 +151,8 @@ loadJQueryUI().then(function() {
   $("#workflowynode").autocomplete({
     source: function(request, response) {
       var results = nf.search(request.term);
-      response(results.map( function(a) {
-        return { label: a.label, id: a.wfid };
+      response(results.map(function(i) {
+        return { label: i.label, id: i.wfid };
       }));
     },
     select: function(event, ui) {
