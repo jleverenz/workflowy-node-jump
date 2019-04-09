@@ -80,7 +80,6 @@ addGlobalStyle(`
     border:                 2px black;
     padding:                1em;
     background:             lightgray;
-    font-size:              80%;
     z-index:                2;
     display:                none;
   }
@@ -177,6 +176,5 @@ loadJQueryUI().then(function() {
   // override jquery autocomplete style
   $(".ui-autocomplete").each(function () {
     this.style.setProperty('z-index', '3', 'important');
-    this.style.setProperty('font-size', '80%');
   });
 });
