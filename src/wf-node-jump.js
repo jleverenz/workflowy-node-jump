@@ -9,10 +9,13 @@ import nf from './nodefinder'
  * @returns {Promise} Resolves when loading is complete (undefined return).
  */
 function loadJQueryUI() {
-  return new Promise((resolve, reject)=>{
-    $.getScript('https://code.jquery.com/ui/1.8.7/jquery-ui.min.js')
-      .done(resolve);
-  });
+  const loaders = ['https://code.jquery.com/jquery-1.12.4.min.js',
+                   'https://code.jquery.com/ui/1.12.1/jquery-ui.min.js'].map(i => {
+                     return new Promise((resolve, reject) => {
+                       $.getScript(i).done(resolve);
+                     });
+                   });
+  return Promise.all(loaders);
 }
 
 
@@ -47,15 +50,25 @@ $("body").append(`
   </div>
 `);
 
-
 function addGlobalStyle(css) {
-  var head, style;
-  head = document.getElementsByTagName('head')[0];
+  const head = document.getElementsByTagName('head')[0];
   if (!head) { return; }
-  style = document.createElement('style');
+
+  const style = document.createElement('style');
   style.type = 'text/css';
   style.innerHTML = css;
   head.appendChild(style);
+}
+
+function addGlobalStylesheet(href) {
+  const head = document.getElementsByTagName('head')[0];
+  if (!head) { return; }
+
+  const styleLink = document.createElement('link');
+  styleLink.rel = 'stylesheet';
+  styleLink.type = 'text/css';
+  styleLink.href = href;
+  head.appendChild(styleLink);
 }
 
 addGlobalStyle(`
@@ -73,6 +86,7 @@ addGlobalStyle(`
   }
 `);
 
+addGlobalStylesheet('https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css');
 
 /**
  * Logic for detecting if a keydown event is the node jump hotkey.
