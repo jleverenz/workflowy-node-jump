@@ -9,10 +9,10 @@ import nf from './nodefinder'
  * @returns {Promise} Resolves when loading is complete (undefined return).
  */
 function loadJQueryUI() {
-    return new Promise((resolve, reject)=>{
-        $.getScript('https://code.jquery.com/ui/1.8.7/jquery-ui.min.js')
-            .done(resolve);
-    });
+  return new Promise((resolve, reject)=>{
+    $.getScript('https://code.jquery.com/ui/1.8.7/jquery-ui.min.js')
+      .done(resolve);
+  });
 }
 
 
@@ -29,48 +29,48 @@ function loadJQueryUI() {
  * @returns {Promise} Resolves to an Array of node data.
  */
 function getWorkflowyData() {
-    return new Promise((resolve, reject)=>{
-        $.get( "get_initialization_data?client_version=18", function( data ) {
-            var rootChildren = data.projectTreeData.mainProjectTreeInfo.rootProjectChildren;
-            resolve(nf.processWorkflowyNodes(rootChildren));
-        });
+  return new Promise((resolve, reject)=>{
+    $.get( "get_initialization_data?client_version=18", function( data ) {
+      var rootChildren = data.projectTreeData.mainProjectTreeInfo.rootProjectChildren;
+      resolve(nf.processWorkflowyNodes(rootChildren));
     });
+  });
 }
 
 
 $("body").append(`
-    <div id="gmPopupContainer">
-        <div class="ui-widget">
-            <label for="workflowynode">Jump: </label>
-            <input id="workflowynode">
-        </div>
+  <div id="gmPopupContainer">
+    <div class="ui-widget">
+      <label for="workflowynode">Jump: </label>
+      <input id="workflowynode">
     </div>
+  </div>
 `);
 
 
 function addGlobalStyle(css) {
-    var head, style;
-    head = document.getElementsByTagName('head')[0];
-    if (!head) { return; }
-    style = document.createElement('style');
-    style.type = 'text/css';
-    style.innerHTML = css;
-    head.appendChild(style);
+  var head, style;
+  head = document.getElementsByTagName('head')[0];
+  if (!head) { return; }
+  style = document.createElement('style');
+  style.type = 'text/css';
+  style.innerHTML = css;
+  head.appendChild(style);
 }
 
 addGlobalStyle(`
-    #gmPopupContainer {
-        position:               fixed;
-        top:                    30%;
-        left:                   0%;
-        transform: translate(0%, -50%);
-        border:                 2px black;
-        padding:                1em;
-        background:             lightgray;
-        font-size:              80%;
-        z-index:                2;
-        display:                none;
-    }
+  #gmPopupContainer {
+    position:               fixed;
+    top:                    30%;
+    left:                   0%;
+    transform: translate(0%, -50%);
+    border:                 2px black;
+    padding:                1em;
+    background:             lightgray;
+    font-size:              80%;
+    z-index:                2;
+    display:                none;
+  }
 `);
 
 
@@ -78,14 +78,14 @@ addGlobalStyle(`
  * Logic for detecting if a keydown event is the node jump hotkey.
  */
 function detectHotKeyPress(e) {
-    var platform = window.navigator.platform;
+  var platform = window.navigator.platform;
 
-    // CTRL+J on macos, CTRL-. on win
-    if(platform.indexOf("Mac") == 0) {
-        return (e.keyCode == 74 && !e.shiftKey && e.ctrlKey && !e.altKey && !e.metaKey);
-    } else {
-        return (e.keyCode == 190 && !e.shiftKey && e.ctrlKey && !e.altKey && !e.metaKey);
-    }
+  // CTRL+J on macos, CTRL-. on win
+  if(platform.indexOf("Mac") == 0) {
+    return (e.keyCode == 74 && !e.shiftKey && e.ctrlKey && !e.altKey && !e.metaKey);
+  } else {
+    return (e.keyCode == 190 && !e.shiftKey && e.ctrlKey && !e.altKey && !e.metaKey);
+  }
 }
 
 
@@ -94,19 +94,19 @@ function detectHotKeyPress(e) {
  * input and set focus to it.
  */
 document.addEventListener('keydown', function(e) {
-    if (detectHotKeyPress(e)) {
-        $("#gmPopupContainer").toggle();
-        if($("#gmPopupContainer").is(":visible")) {
-            // Refresh node data window pop-up is opened. This will ensure the
-            // latest node data is available.
-            getWorkflowyData().then( v => {
-                nf.indexNodes(v);
-            });
+  if (detectHotKeyPress(e)) {
+    $("#gmPopupContainer").toggle();
+    if($("#gmPopupContainer").is(":visible")) {
+      // Refresh node data window pop-up is opened. This will ensure the
+      // latest node data is available.
+      getWorkflowyData().then( v => {
+        nf.indexNodes(v);
+      });
 
-            $("#workflowynode").val("");
-            $("#workflowynode").focus();
-        }
+      $("#workflowynode").val("");
+      $("#workflowynode").focus();
     }
+  }
 }, false);
 
 
@@ -114,10 +114,10 @@ document.addEventListener('keydown', function(e) {
  * esc key handler. Hide the pop-up.
  */
 $( "#workflowynode" ).bind('keydown', function(e) {
-    // pressed esc
-    if (e.keyCode == 27) {
-        $("#gmPopupContainer").hide();
-    }
+  // pressed esc
+  if (e.keyCode == 27) {
+    $("#gmPopupContainer").hide();
+  }
 });
 
 
@@ -125,7 +125,7 @@ $( "#workflowynode" ).bind('keydown', function(e) {
  * Hide on losing focus.
  */
 $( "#workflowynode" ).focusout(function(e) {
-    $("#gmPopupContainer").hide();
+  $("#gmPopupContainer").hide();
 });
 
 
@@ -133,36 +133,36 @@ $( "#workflowynode" ).focusout(function(e) {
  * Load resources and workflowy data, then initiatlize autcomplete widget.
  */
 loadJQueryUI().then(function() {
-    // Initialize the autocomplete widget. Note sources is set dynamically when
-    // the pop-up is opened, to get latest node data.
-    $("#workflowynode").autocomplete({
-        source: function(request, response) {
-            var results = nf.search(request.term);
-            response(results.map( function(a) {
-                return { label: a.label, id: a.wfid };
-            }));
-        },
-        select: function(event, ui) {
-            event.preventDefault();
+  // Initialize the autocomplete widget. Note sources is set dynamically when
+  // the pop-up is opened, to get latest node data.
+  $("#workflowynode").autocomplete({
+    source: function(request, response) {
+      var results = nf.search(request.term);
+      response(results.map( function(a) {
+        return { label: a.label, id: a.wfid };
+      }));
+    },
+    select: function(event, ui) {
+      event.preventDefault();
 
-            // Parse the node id to get the anchor url used by workflowy.
-            var pattern = RegExp("-([^-]+)$");
-            var m = ui.item.id.match(pattern);
-            if(m) {
-                var g = "https://workflowy.com/#/" + m[1];
-                $("#gmPopupContainer").hide();
-                window.location.href = g;
-            }
-        },
-        focus: function(event, ui) {
-            event.preventDefault();
-            $(this).val(ui.item.label);
-        }
-    });
+      // Parse the node id to get the anchor url used by workflowy.
+      var pattern = RegExp("-([^-]+)$");
+      var m = ui.item.id.match(pattern);
+      if(m) {
+        var g = "https://workflowy.com/#/" + m[1];
+        $("#gmPopupContainer").hide();
+        window.location.href = g;
+      }
+    },
+    focus: function(event, ui) {
+      event.preventDefault();
+      $(this).val(ui.item.label);
+    }
+  });
 
-    // override jquery autocomplete style
-    $(".ui-autocomplete").each(function () {
-        this.style.setProperty('z-index', '3', 'important');
-        this.style.setProperty('font-size', '80%');
-    });
+  // override jquery autocomplete style
+  $(".ui-autocomplete").each(function () {
+    this.style.setProperty('z-index', '3', 'important');
+    this.style.setProperty('font-size', '80%');
+  });
 });
